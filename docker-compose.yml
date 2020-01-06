@@ -1,0 +1,36 @@
+version: "3"
+services:
+ pg_master:
+  container_name: db_pg_master_c
+  build: ./master
+  volumes:
+   - pg_data:/var/lib/postgresql/data
+  environment:
+   - POSTGRES_USER=postgres
+   - POSTGRES_PASSWORD=postgres
+   - POSTGRES_MULTIPLE_DATABASES=merchant_bpmn_service_db,merchant_order_service_db,merchant_product_service_db,merchant_service_db,merchant_system_params_service_db,merchant_user_service_db
+   - PG_REP_USER=merchant_replicator
+   - PG_REP_PASSWORD=FvX63dqZ
+  ports:
+    - 5432:5432
+  networks:
+   default:
+    aliases:
+     - pg_cluster
+ pg_slave:
+  container_name: db_pg_slave_c
+  build: ./slave
+  environment:
+   - POSTGRES_USER=postgres
+   - POSTGRES_PASSWORD=postgres
+   - POSTGRES_MULTIPLE_DATABASES=merchant_bpmn_service_db,merchant_order_service_db,merchant_product_service_db,merchant_service_db,merchant_system_params_service_db,merchant_user_service_db
+   - PG_REP_USER=merchant_replicator
+   - PG_REP_PASSWORD=FvX63dqZ
+  ports:
+    - 5433:5432
+  networks:
+   default:
+    aliases:
+     - pg_cluster
+volumes:
+ pg_data:
