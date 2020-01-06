@@ -1,0 +1,10 @@
+version: '3.1'
+services:
+ pg_admin_test:
+  image: dpage/pgadmin4:latest
+  environment:
+   - PGADMIN_DEFAULT_EMAIL=c@test.kz
+   - PGADMIN_DEFAULT_PASSWORD=admin
+  ports:
+    - 50080:80
+    - 50443:443
