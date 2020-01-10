@@ -1,17 +1,15 @@
 version: '3.1'
  
 services:
- pg_master:
-  container_name: merchant_db_slave
+ db:
+  container_name: slave_merchant_db
   build: .
   volumes:
-   - ./data:/var/lib/postgresql/data # if windows OS, change to "- pg_data:/var/lib/postgresql/data" then create a volume pg_data
+   - data:/var/lib/postgresql/data
   environment:
-   - POSTGRES_USER=merchant_user
-   - POSTGRES_PASSWORD=merchantq!213Q1!
    - PG_REP_USER=merchant_replicator
    - PG_REP_PASSWORD=FvX63dqZ
   ports:
-    - 5432:5432
-#volumes:
-    #pg_data:
+    - 5433:5432
+volumes:
+    data:

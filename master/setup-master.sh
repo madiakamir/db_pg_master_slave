@@ -16,14 +16,7 @@ EOSQL
 
 
 cat >> ${PGDATA}/postgresql.conf <<EOF
-wal_level = hot_standby
-archive_mode = on
-archive_command = 'cp %p /var/lib/postgresql/data/archive/%f'
-max_wal_senders = 10
-wal_keep_segments = 64
-hot_standby = on
-synchronous_commit = local
-synchronous_standby_names = 'pgslave001'
+wal_level = logical
 EOF
 
 function create_user_and_database() {
